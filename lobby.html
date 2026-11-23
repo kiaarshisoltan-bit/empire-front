@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMPIRE FRONT - Lobbies</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ background:#101827;
+ color:#f1f5f9;
+ font-family:Tahoma,Arial,sans-serif;
+}
+
+header{
+ background:#172438;
+ padding:20px;
+ text-align:center;
+ border-bottom:2px solid #c69b42;
+}
+
+header h1{
+ color:#e7bb59;
+ margin:0;
+ font-size:24px;
+}
+
+header p{
+ color:#aab8cc;
+ font-size:12px;
+}
+
+.container{
+ max-width:850px;
+ margin:auto;
+ padding:15px;
+}
+
+.card{
+ background:#1c2b40;
+ border:1px solid #34445b;
+ border-radius:12px;
+ padding:16px;
+ margin-bottom:14px;
+}
+
+h2{
+ color:#e7bb59;
+ font-size:17px;
+ margin-top:0;
+}
+
+input,select{
+ width:100%;
+ padding:13px;
+ margin:7px 0 12px;
+ background:#101827;
+ color:white;
+ border:1px solid #465b74;
+ border-radius:8px;
+ font-size:14px;
+}
+
+label{
+ font-size:13px;
+ color:#cbd5e1;
+}
+
+button{
+ width:100%;
+ padding:13px;
+ border:0;
+ border-radius:8px;
+ background:#b88a35;
+ color:#111827;
+ font-weight:bold;
+ font-size:14px;
+ margin-top:8px;
+ cursor:pointer;
+}
+
+.secondary{
+ background:#314761;
+ color:white;
+}
+
+.lobby{
+ background:#263850;
+ border:1px solid #465b74;
+ border-radius:10px;
+ padding:13px;
+ margin-top:12px;
+}
+
+.lobby h3{
+ margin:0 0 10px;
+ color:#f4cf73;
+ font-size:15px;
+}
+
+.info{
+ color:#b7c5d8;
+ font-size:12px;
+ line-height:2.2;
+}
+
+.tag{
+ display:inline-block;
+ background:#344b68;
+ padding:5px 9px;
+ border-radius:6px;
+ font-size:11px;
+ margin:3px;
+}
+
+.empty{
+ text-align:center;
+ padding:20px;
+ color:#aab8cc;
+ font-size:13px;
+}
+
+#room{
+ display:none;
+}
+
+footer{
+ text-align:center;
+ color:#8293a8;
+ font-size:11px;
+ padding:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <h1>🌍 EMPIRE FRONT</h1>
+ <p>مرکز مسابقات و لابی‌های جهان</p>
+</header>
+
+<main class="container">
+
+ <section class="card">
+  <h2>🏠 مرکز لابی‌ها</h2>
+  <p class="info">
+   به مرکز مسابقات خوش آمدید.
+   یک لابی انتخاب کنید یا جهان جدیدی بسازید.
+  </p>
+  <button onclick="showCreate()">
+   ➕ ساخت لابی جدید
+  </button>
+  <button class="secondary"
+   onclick="location.href='index.html'">
+   ↩ بازگشت به صفحه اصلی
+  </button>
+ </section>
+
+ <section class="card" id="create" style="display:none">
+  <h2>🌍 ایجاد جهان جدید</h2>
+
+  <label>نام لابی</label>
+  <input id="name" placeholder="مثلاً امپراتوری‌های جهان">
+
+  <label>نوع لابی</label>
+  <select id="type">
+   <option value="عمومی">عمومی</option>
+   <option value="خصوصی">خصوصی</option>
+  </select>
+
+  <div id="passwordBox" style="display:none">
+   <label>رمز عبور لابی</label>
+   <input id="password" type="password"
+    placeholder="رمز لابی را وارد کنید">
+  </div>
+
+  <label>ظرفیت بازیکنان</label>
+  <select id="capacity">
+   <option>10</option>
+   <option>20</option>
+   <option selected>50</option>
+  </select>
+
+  <label>مدت مسابقه</label>
+  <select id="duration">
+   <option>3 روز</option>
+   <option selected>7 روز</option>
+   <option>14 روز</option>
+   <option>30 روز</option>
+  </select>
+
+  <label>فضای تاریخی</label>
+  <select id="era">
+   <option>ترکیبی</option>
+   <option>مدرن</option>
+   <option>قرون وسطایی</option>
+   <option>آینده‌نگر</option>
+  </select>
+
+  <button onclick="createLobby()">
+   ساخت جهان
+  </button>
+
+  <button class="secondary"
+   onclick="hideCreate()">
+   انصراف
+  </button>
+ </section>
+
+ <section class="card">
+  <h2>🌐 لابی‌های موجود</h2>
+  <div id="lobbies">
+   <div class="empty">
+    هنوز لابی آزمایشی ساخته نشده است.
+   </div>
+  </div>
+ </section>
+
+ <section class="card" id="room">
+  <h2>🏛️ اتاق مسابقه</h2>
+  <div id="roomInfo"></div>
+  <button onclick="leaveRoom()" class="secondary">
+   خروج از لابی
+  </button>
+ </section>
+
+</main>
+
+<footer>
+ EMPIRE FRONT © 2026
+ <br>نسخه آزمایشی 0.2
+</footer>
+
+<script>
+let lobbies = [];
+let currentLobby = null;
+
+const typeSelect = document.getElementById("type");
+
+typeSelect.addEventListener("change",function(){
+ document.getElementById("passwordBox").style.display =
+ this.value === "خصوصی" ? "block" : "none";
+});
+
+function showCreate(){
+ document.getElementById("create").style.display="block";
+}
+
+function hideCreate(){
+ document.getElementById("create").style.display="none";
+}
+
+function createLobby(){
+
+ const name=document.getElementById("name").value.trim();
+ const type=document.getElementById("type").value;
+ const password=document.getElementById("password").value;
+ const capacity=Number(document.getElementById("capacity").value);
+ const duration=document.getElementById("duration").value;
+ const era=document.getElementById("era").value;
+
+ if(!name){
+  alert("لطفاً نام لابی را وارد کنید.");
+  return;
+ }
+
+ if(type==="خصوصی" && !password){
+  alert("برای لابی خصوصی رمز تعیین کنید.");
+  return;
+ }
+
+ const lobby={
+  id:Date.now().toString(),
+  name:name,
+  type:type,
+  password:password,
+  capacity:capacity,
+  duration:duration,
+  era:era,
+  players:1
+ };
+
+ lobbies.push(lobby);
+
+ renderLobbies();
+ hideCreate();
+ joinLobby(lobby.id);
+
+ document.getElementById("name").value="";
+ document.getElementById("password").value="";
+}
+
+function renderLobbies(){
+
+ const box=document.getElementById("lobbies");
+
+ if(lobbies.length===0){
+  box.innerHTML='<div class="empty">هنوز لابی وجود ندارد.</div>';
+  return;
+ }
+
+ box.innerHTML="";
+
+ lobbies.forEach(lobby=>{
+
+  const div=document.createElement("div");
+  div.className="lobby";
+
+  const title=document.createElement("h3");
+  title.textContent="🌍 "+lobby.name;
+
+  const info=document.createElement("div");
+  info.className="info";
+  info.textContent=
+   "نوع: "+lobby.type+
+   " | بازیکنان: "+lobby.players+"/"+lobby.capacity+
+   " | مدت: "+lobby.duration+
+   " | دوره: "+lobby.era;
+
+  const button=document.createElement("button");
+  button.textContent="ورود به لابی";
+  button.onclick=()=>joinLobby(lobby.id);
+
+  div.append(title,info,button);
+  box.appendChild(div);
+ });
+}
+
+function joinLobby(id){
+
+ const lobby=lobbies.find(x=>x.id===id);
+
+ if(!lobby) return;
+
+ if(lobby.type==="خصوصی"){
+  const entered=prompt("رمز عبور لابی را وارد کنید:");
+
+  if(entered!==lobby.password){
+   alert("رمز عبور صحیح نیست.");
+   return;
+  }
+ }
+
+ currentLobby=lobby;
+
+ document.getElementById("room").style.display="block";
+
+ document.getElementById("roomInfo").textContent=
+  "نام جهان: "+lobby.name+
+  " | ظرفیت: "+lobby.capacity+
+  " | مدت مسابقه: "+lobby.duration+
+  " | بازیکنان: "+lobby.players;
+
+ document.getElementById("room").scrollIntoView({
+  behavior:"smooth"
+ });
+}
+
+function leaveRoom(){
+ currentLobby=null;
+ document.getElementById("room").style.display="none";
+}
+
+renderLobbies();
+</script>
+
+</body>
+</html>
