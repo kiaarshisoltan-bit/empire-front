@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMPIRE FRONT</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #101827;
+    color: #f1f5f9;
+    font-family: Tahoma, Arial, sans-serif;
+}
+
+header {
+    background: #172438;
+    padding: 20px 15px;
+    text-align: center;
+    border-bottom: 2px solid #c69b42;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #e7bb59;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    color: #aab8cc;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 15px;
+}
+
+.card {
+    background: #1c2b40;
+    border: 1px solid #34445b;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+}
+
+h2 {
+    font-size: 17px;
+    color: #e7bb59;
+    margin-top: 0;
+}
+
+.profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    background: #354968;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.stat {
+    background: #263850;
+    border-radius: 10px;
+    padding: 13px;
+    text-align: center;
+}
+
+.stat span {
+    display: block;
+    font-size: 12px;
+    color: #aab8cc;
+    margin-bottom: 8px;
+}
+
+.stat strong {
+    color: #f4cf73;
+    font-size: 19px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: #b88a35;
+    color: #111827;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 9px;
+}
+
+button.secondary {
+    background: #314761;
+    color: white;
+}
+
+button:active {
+    opacity: 0.8;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9px;
+}
+
+.menu button {
+    margin: 0;
+    background: #263850;
+    color: white;
+    border: 1px solid #465b74;
+}
+
+.notice {
+    color: #aab8cc;
+    font-size: 12px;
+    line-height: 2;
+}
+
+footer {
+    text-align: center;
+    color: #7e91aa;
+    padding: 25px;
+    font-size: 11px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🌍 EMPIRE FRONT</div>
+    <div class="subtitle">
+        دنیای امپراتوری‌ها؛ قدرت، اقتصاد و استراتژی
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="card">
+        <div class="profile">
+            <div>
+                <h2>فرمانده، خوش آمدی!</h2>
+                <div class="notice">
+                    حساب کاربری: بازیکن آزمایشی
+                </div>
+                <div class="notice">
+                    کشور: ایران
+                </div>
+            </div>
+            <div class="avatar">👑</div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>🏛️ وضعیت کشور</h2>
+
+        <div class="stats">
+
+            <div class="stat">
+                <span>💰 خزانه</span>
+                <strong>10,000</strong>
+            </div>
+
+            <div class="stat">
+                <span>👥 جمعیت</span>
+                <strong>1,000,000</strong>
+            </div>
+
+            <div class="stat">
+                <span>🌾 غذا</span>
+                <strong>5,000</strong>
+            </div>
+
+            <div class="stat">
+                <span>⛏️ مواد اولیه</span>
+                <strong>3,000</strong>
+            </div>
+
+            <div class="stat">
+                <span>🔬 فناوری</span>
+                <strong>سطح 1</strong>
+            </div>
+
+            <div class="stat">
+                <span>🏆 رتبه</span>
+                <strong>---</strong>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>🗺️ مرکز فرماندهی</h2>
+
+        <button onclick="showMessage('نقشه جهان در مرحله بعد ساخته می‌شود.')">
+            🌍 ورود به نقشه جهان
+        </button>
+
+        <button class="secondary"
+        onclick="showMessage('بخش مدیریت اقتصاد به‌زودی فعال می‌شود.')">
+            💰 مدیریت اقتصاد
+        </button>
+
+        <button class="secondary"
+        onclick="showMessage('مرکز تحقیقات به‌زودی فعال می‌شود.')">
+            🔬 تحقیقات و فناوری
+        </button>
+
+        <button class="secondary"
+        onclick="showMessage('مرکز دیپلماسی به‌زودی فعال می‌شود.')">
+            🤝 دیپلماسی
+        </button>
+    </section>
+
+    <section class="card">
+        <h2>🎮 بخش چندنفره</h2>
+
+        <div class="menu">
+            <button onclick="showMessage('فهرست لابی‌ها در مرحله بعد ساخته می‌شود.')">
+                🏠 لابی‌ها
+            </button>
+
+            <button onclick="showMessage('ساخت لابی اختصاصی در مرحله بعد فعال می‌شود.')">
+                ➕ ساخت لابی
+            </button>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>📢 اخبار جهان</h2>
+        <p class="notice">
+            به EMPIRE FRONT خوش آمدید!
+            جهان منتظر تصمیم‌های اقتصادی و مدیریتی شماست.
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    EMPIRE FRONT © 2026
+    <br>
+    نسخه آزمایشی 0.1
+</footer>
+
+<script>
+function showMessage(message) {
+    alert(message);
+}
+</script>
+
+</body>
+</html>
